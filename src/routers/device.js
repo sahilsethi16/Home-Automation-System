@@ -14,7 +14,6 @@ router.get('', async (req, res) =>{
 
 router.post('/devices/addDevice', async (req, res) => {
     try{
-        console.log(req.body);
         const device= new Device(req.body);
         await device.save()
         
@@ -50,7 +49,6 @@ router.patch('/devices/:id',async (req, res) =>{
         if(!device){
             res.status(404).send()
         }
-        console.log(device);
 
         updates.forEach((update) =>{
             device[update]= req.body[update];
