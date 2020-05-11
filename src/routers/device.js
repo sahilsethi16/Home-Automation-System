@@ -2,14 +2,25 @@ const express= require('express');
 const router= new express.Router()
 const Device= require('../models/device')
 
+router.get('', async (req, res) =>{
+    const devices= await Device.find({});
+    //res.send(devices);
+    res.render('index',{
+        title: 'Home Automation System',
+        author: 'Sahil Sethi',
+        devices: devices
+    });
+})
+
 router.post('/devices/addDevice', async (req, res) => {
     try{
+        console.log(req.body);
         const device= new Device(req.body);
         await device.save()
-
+        
         res.send(device);
     }catch(e){
-        res.status(400).send();
+        res.status(400).send(e);
     }
 })
 
@@ -54,7 +65,7 @@ router.patch('/devices/:id',async (req, res) =>{
 
 router.delete('/devices/:id', async(req, res) =>{
     try{
-        const device= await Device.findOneAndDelete(req.params.id);
+        const device= await Device.findOneAndDelete({_id:req.params.id});
 
         if(!device){
             return res.status(404).send();
