@@ -17,7 +17,7 @@ $('.delete').on('click', function(){
     deleteData('/devices/'+deviceId)
         .then(data => {
             console.log(data);
-            window.location.reload(); 
+            //window.location.reload(); 
          });
     
   });
